@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootcamps</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div id="AgregarCancion">
+        <h2 class="pt-3"> Turnos de Bootcamps</h2>
+
+        <div class="container pt-5 w-50">
+            <div>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Nombre:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="nombre"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Duracion: </label>
+                    <div class="col-sm-10">
+                        <select id="duracion" class="form-select form-control">
+                            <option value="1">1 Mes</option>
+                            <option value="2">2 Meses</option>
+                            <option value="3">3 Meses</option>
+                            <option value="4">4 Meses</option>
+                            <option value="5">5 Meses</option>
+                            <option value="6">6 Meses</option>
+                            <option value="7">7 Meses</option>
+                            <option value="8">8 Meses</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="rut" class="col-sm-2 col-form-label">Turno:</label>
+                    <div class="col-sm-10">
+                        <select id="turno" class="form-select form-control">
+                            <option value="1">Diurno</option>
+                            <option value="2">Vespertino</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <input type="text" id="idOculto" class="d-none form-form-label" >
+                </div>
+                <div class="mt-3"><button onclick="nuevoTurno()" id="agregar" class="m-auto btn btn-success mt-3">
+                    Agregar
+                </button>
+                <button onclick="editarTurno()" id="editar" class="m-auto btn btn-info mt-3">
+                    Editar
+                </button></div>
+                
+            </div>
+        </div>
+    </div>
+    <div id="ListaTurno">
+        <hr />
+        <hr />
+        <h2>Tabla de Turno </h2>
+
+        <div class="container pt-5 w-75">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Duracion</th>
+                        <th scope="col">Turno</th>
+                        <th scope="col">-</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo"></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>
+
+<style>
+    body {
+        text-align: center;
+        background: #9afd73;
+        color: rgb(0, 0, 0);
+    }
+</style>
+
+<script>
+    let url = "http://localhost:3000/turno";
+    let tbody = document.getElementById("cuerpo");
+    let nombre = document.getElementById("nombre");
+    let duracion = document.getElementById("duracion");
+    let turno = document.getElementById("turno");
+    let idOculto = document.getElementById("idOculto")
+
+    let turnos = [];
+    window.onload = getData();
+
+    async function getData() {
+        await axios.get(url).then((data) => {
+            turnos = data.data;
+            tbody.innerHTML = "";
+            console.log(turnos)
+            turnos.forEach((t, i) => {
+                tbody.innerHTML += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${t.nombre}</td>
+          <td>${t.duracion == 1 ? `${t.duracion} Mes` : `${t.duracion} Meses` } </td>
+          <td>${t.turno ==1 ? "Diurno" : "Vespertino" }</td>
+          <td>
+            <button class="btn btn-warning" onclick="prepararTurno(${i},'${
+          t.id
+        }')">Editar</button>
+            <button class="btn btn-danger" onclick="eliminarTurno(${i},'${
+          t.id
+        }')">Eliminar</button>
+          </td>
+        </tr>
+      `;
+            });
+        });
+        nombre.value = "";
+        duracion.value = "";
+        turno.value = "";
+    }
+
+    function nuevoTurno() {
+        nombre;
+        duracion;
+        turno;
+        let data = {
+            nombre: nombre.value,
+            duracion: duracion.value,
+            turno: turno.value,
+        };
+        console.log(data);
+        axios.post(url, data).then(() => getData());
+    }
+
+    function eliminarTurno(i, id) {
+        axios.delete(url + "?id=" + id).then(() => {
+            alert("Nombre " + turnos[i].nombre + " eliminado del Turno");
+            getData();
+        });
+    }
+
+    function prepararTurno(i, id) {
+        nombre.value = turnos[i].nombre;
+        duracion.value = turnos[i].duracion;
+        turno.value = turnos[i].turno;
+        idOculto.value =turnos[i].id
+
+        document
+            .getElementById("editar")
+            .setAttribute("onclick", `editarTurno('${id}')`);
+        document.getElementById("agregar").style.display = "none";
+        document.getElementById("editar").style.display = "block";
+    }
+
+    function editarTurno(id) {
+        axios
+            .put(url, {
+                nombre: nombre.value,
+                duracion: duracion.value,
+                turno: turno.value,
+                id: idOculto.value
+            })
+            .then(() => {
+                getData();
+                document.getElementById("agregar").style.display = "block";
+                document.getElementById("editar").style.display = "none";
+            });
+    }
+</script>
