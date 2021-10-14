@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamps</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center">Bootcamps</h1>
+            <hr>
+        </div>
+        <div class="col-4">
+            <legend>Nuevo bootcamp</legend>
+            <form id="insertar">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="nombreBootcamp" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Duración (meses)</label>
+                    <select name="duracionBootcamp" class="form-control">
+                        <option value="1">1 Mes</option>
+                        <option value="2">2 Meses</option>
+                        <option value="3">3 Meses</option>
+                        <option value="4">4 Meses</option>
+                        <option value="5">5 Meses</option>
+                        <option value="6">6 Meses</option>
+                        <option value="7">7 Meses</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Turno</label>
+                    <select name="turnoBootcamp" class="form-control">
+                        <option value="1">Diurno</option>
+                        <option value="2">Nocturno</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success btn-block">Agregar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-4">
+            <legend>Editar bootcamp</legend>
+            <div class="form-group">
+                <label>Seleccione bootcamp</label>
+                <select id="selectEditar" class="form-control">
+                </select>
+            </div>
+            <form id="editar">
+                <input type="hidden" name="idEditar" id="idEditar">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="nombreEditar" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Duración (meses)</label>
+                    <select id="mesesEditar" class="form-control">
+                        <option value="1">1 Mes</option>
+                        <option value="2">2 Meses</option>
+                        <option value="3">3 Meses</option>
+                        <option value="4">4 Meses</option>
+                        <option value="5">5 Meses</option>
+                        <option value="6">6 Meses</option>
+                        <option value="7">7 Meses</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Turno</label>
+                    <select id="turnoEditar" class="form-control">
+                        <option value="1">Diurno</option>
+                        <option value="2">Nocturno</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-info btn-block">Actualizar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-4">
+            <legend>Eliminar bootcamp</legend>
+            <form id="eliminar">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <select class="form-control">
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-danger btn-block">Eliminar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-12">
+            <hr>
+            <table id="tabla-bootcamp" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Bootcamp</th>
+                        <th>Duración</th>
+                        <th>Turno</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <script src="http://localhost:3000/script"></script>
+    <script>
+    </script>
+</body>
+
+</html>
