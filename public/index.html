@@ -141,6 +141,7 @@
             turno: turno.value,
         };
         console.log(data);
+        getData()
         axios.post(url, data).then(() => getData());
     }
 
